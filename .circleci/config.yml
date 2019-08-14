@@ -12,14 +12,14 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/build/test-results
+            - .
 
   package:
     docker: 
       - image: circleci/openjdk:8-jdk
     steps:
       - attach_workspace:
-          at: /
+          at: ~/
       - run:
           name: Artifact Step
           command: gradle jar
@@ -29,7 +29,8 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/build/libs/gildedrose-0.0.1-SNAPSHOT.jar
+            - .
+          #  - project/build/libs/gildedrose-0.0.1-SNAPSHOT.jar
 
 
 workflows:
