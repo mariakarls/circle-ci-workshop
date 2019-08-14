@@ -1,3 +1,4 @@
+version: 2
 jobs:
     
   test:
@@ -14,7 +15,7 @@ jobs:
           root: .
           paths:
             - .
-
+  
   package:
     docker: 
       - image: circleci/openjdk:8-jdk
@@ -22,11 +23,11 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: Artifact Step
+          name: Package Step
           command: gradle jar
       - store_artifacts:
           path: build/libs
-          desitnation: prefix
+          desitnation: build
       - persist_to_workspace:
           root: .
           paths:
@@ -38,9 +39,12 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
-      - run: docker build -t $DOCKER_USER/myapp:$CIRCLE_SHA1 .
-      - run: docker push $DOCKER_USER/myapp:$CIRCLE_SHA1
+      - run: 
+          name: Dockerizing Step
+          command: |
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker build -t $DOCKER_USER/myapp:$CIRCLE_SHA1 .
+            docker push $DOCKER_USER/myapp:$CIRCLE_SHA1
 
 workflows:
   version: 2
