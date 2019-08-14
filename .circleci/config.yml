@@ -8,3 +8,5 @@ jobs:
       - run:
           name: Gradle Test Step
           command: gradle test
+      - store_test_results:
+          path: test-results
