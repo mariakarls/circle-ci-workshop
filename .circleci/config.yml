@@ -10,16 +10,17 @@ jobs:
       - store_test_results:
           path: build/test-results
       - persist_to_workspace:
-          root: test
-          paths: 
-            - . 
+          root: ~/
+          paths:
+            - .
+
   package:
     require: test
     docker: 
       - image: circleci/openjdk:8-jdk
     steps:
       - attach_workspace:
-          at: /tmp/workspace
+          at: ~/
       - run:
           name: Artifact Step
           command: gradle jar
