@@ -12,7 +12,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - .
+            - /home/circleci/project/build/test-results
 
   package:
     require: test
@@ -30,7 +30,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - .
+            - /home/circleci/project/build/libs/gildedrose-0.0.1-SNAPSHOT.jar
 
 
 workflows:
